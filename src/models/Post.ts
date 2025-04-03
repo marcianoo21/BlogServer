@@ -15,4 +15,8 @@ const PostSchema = new Schema<IPost>({
     content: { type: String, required: true },
     tags: [{ type: String }]
 
-})
+},
+    { timestamps: true }
+);
+
+export default mongoose.model<IPost>("Post", PostSchema);
