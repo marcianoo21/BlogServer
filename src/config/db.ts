@@ -1,46 +1,29 @@
-// Update the db.ts to not close the client prematurely
-import { Client } from 'pg';
+import 'dotenv/config'
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const client = new Client({
-  user: 'postgres',
-  password: 'trolik21',
-  host: 'localhost',
-  port: 5433,
-  database: 'mydb',
+const username = process.env.MONGO_USER;
+const password = process.env.MONGO_PASSWORD;
+const uri = `mongodb+srv://${username}:${password}@blog.0vfzdcj.mongodb.net/?retryWrites=true&w=majority&appName=Blog`;
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
 });
 
-client
-  .connect()
-  .then(() => {
-    console.log('Base connected!');
-  })
-  .catch((err) => {
-    console.error('Error connecting to database:', err);
-  });
-
-// Define a User interface
-interface User {
-  name: string;
-  email: string;
-  password: string;
-}
-
-// Define the return type from the database
-interface DbUser extends User {
-  id: number;
-  created_at?: Date;
-}
-
-export const createUser = async (user: User): Promise<DbUser> => {
-  const { name, email, password } = user;
+async function run() {
   try {
-    const result = await client.query(
-      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
-      [name, email, password]
-    );
-    return result.rows[0];
-  } catch (err) {
-    console.error('Error creating user:', err);
-    throw err;  // Make sure to throw the error so it's caught by the calling function
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
   }
-};
+}
+run().catch(console.dir);
