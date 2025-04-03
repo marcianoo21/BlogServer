@@ -1,4 +1,4 @@
-# User-TaskManagementAPI
+# Blog
 
 A learning project for building a Node.js/Express API with TypeScript.
 
