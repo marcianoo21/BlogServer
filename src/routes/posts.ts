@@ -3,7 +3,6 @@ const router = express.Router()
 import Post from '../models/Post';
 
 // npx ts-node-dev src/app.ts
-// console.log("POST", Post.find())
 
 const getPost = async (req: any, res: any, next: Function): Promise<void> => {
     let post
@@ -99,7 +98,6 @@ router.delete('/:id', getPost, async (req: Request, res: any) => {
     }
 
 })
-
 
 
 module.exports = router
