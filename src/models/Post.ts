@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IPost extends Document {
     title: string;
-    author: string; // mongoose.Schema.Types.ObjectId;
+    author: mongoose.Schema.Types.ObjectId; // string; 
     content: string;
     tags?: string[];
     createdAt: Date;
@@ -11,7 +11,7 @@ export interface IPost extends Document {
 
 const PostSchema = new Schema<IPost>({
     title: { type: String, required: true },
-    author: { type: String, required: true }, //{ type: Schema.Types.ObjectId, ref: "User", required: true },
+    author: { type: Schema.Types.ObjectId, ref: "User", required: true }, // type: string
     content: { type: String, required: true },
     tags: [{ type: String }]
 
