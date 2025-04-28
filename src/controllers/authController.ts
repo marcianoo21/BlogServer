@@ -28,9 +28,9 @@ const registerUser = async (req: any, res: any): Promise<void> => {
 }
 
 const loginUser = async (req: any, res: any): Promise<void> => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ username });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -39,10 +39,10 @@ const loginUser = async (req: any, res: any): Promise<void> => {
         if (!properPassword) {
             return res.status(401).json({ message: "Invalid credentials" });
         }
-        const token = jwt.sign({ userId: user._id }, 'your-secret-key', {
+        const token = jwt.sign({ userId: user._id, username: user.username }, 'your-secret-key', {
             expiresIn: '1h',
             });
-            res.status(200).json({ token });
+            res.status(200).json({ token, message: "User logged in successfully" });
     
     } catch (err: any) {
         res.status(500).json({ message: err.message })
