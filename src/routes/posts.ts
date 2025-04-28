@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 const router = express.Router()
 import Post from '../models/Post';
+import User from '../models/User';
 
 // npx ts-node-dev src/app.ts
 
@@ -46,16 +47,32 @@ router.get('/:id', getPost, (req: any, res: any) => {
 })
 
 // Create post
-router.post('/', async (req: Request, res: Response) => {
-   
-    const post = new Post({
-        title: req.body.title,
-        author: req.body.author, 
-        content: req.body.content,
-        tags: req.body.tags,
-    });
+router.post('/', async (req: any, res: any) => {
+    const { title, content, author } = req.body;
+
+    if (!req.user || !req.user.username) {
+        return res.status(401).json({ message: "Unauthorized: Missing user information" });
+    }
+
+    const usernameFromToken = req.user.username;
+
+    if (usernameFromToken !== author) {
+        return res.status(403).json({ message: "You are not authorized to create a post for this author" });
+    }
 
     try {
+        const user = await User.findOne({ username: author });
+        if (!user) {
+            return res.status(404).json({ message: "Author not found" });
+        }
+
+        const post = new Post({
+            title,
+            author: user._id, 
+            content,
+            tags: req.body.tags,
+        });
+
         const newPost = await post.save()
         res.status(201).json(newPost)
     } catch (err: any) {
