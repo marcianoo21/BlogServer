@@ -9,7 +9,7 @@ const getPost = async (req: any, res: any, next: Function): Promise<void> => {
     let post
     try {
         const post_id = req.params.id
-        post = await Post.findById(post_id)
+        post = await Post.findById(post_id).populate('author', 'username');
         if (post == null) {
             return res.status(404).json({ message: "Cannot find post" })
         }
@@ -71,6 +71,7 @@ router.post('/', async (req: any, res: any) => {
             author: user._id, 
             content,
             tags: req.body.tags,
+            comments: req.body.comments,
         });
 
         const newPost = await post.save()
@@ -97,6 +98,9 @@ router.patch('/:id', getPost, async (req: Request, res: any) => {
     if (req.body.tags != null) {
         res.post.tags = req.body.tags
     }
+    if (req.body.comments != null) {
+        res.post.comments = req.body.comments
+    }
     try {
         const updatedPost = await res.post.save()
         res.json(updatedPost)
@@ -115,6 +119,13 @@ router.delete('/:id', getPost, async (req: Request, res: any) => {
     }
 
 })
+
+// Get comments
+router.get('/comments/:id', getPost, (req: Request, res: any) => {
+    res.json({ id: res.post._id, author: res.post.author.username ,comments: res.post.comments })
+})
+
+
 
 
 module.exports = router
