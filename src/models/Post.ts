@@ -6,6 +6,8 @@ export interface IPost extends Document {
     content: string;
     tags?: string[];
     comments?: string[];
+    image: string;
+    likes?: mongoose.Schema.Types.ObjectId[];
     createdAt: Date;
     updatedAt: Date;
 }
@@ -15,8 +17,9 @@ const PostSchema = new Schema<IPost>({
     author: { type: Schema.Types.ObjectId, ref: "User", required: true }, // type: string
     content: { type: String, required: true },
     tags: [{ type: String }],
-    comments: [{ type: String }]
-
+    comments: [{ type: String }],
+    image: { type: String, required: true },
+    likes: { type: mongoose.Schema.Types.ObjectId, ref: "User"}
 },
     { timestamps: true }
 );
