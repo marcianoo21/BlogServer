@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Post from "../models/Post";
 import User from "../models/User";
 
-// Pobierz wszystkie posty
+
 export const getAllPosts = async (req: Request, res: Response) => {
     try {
         const posts = await Post.find();
@@ -12,14 +12,12 @@ export const getAllPosts = async (req: Request, res: Response) => {
     }
 };
 
-// Pobierz jeden post
 export const getPostById = (req: any, res: any) => {
     res.send(res.post);
 };
 
-// Utwórz nowy post
 export const createPost = async (req: any, res: any) => {
-    const { title, content, author } = req.body;
+    const { title, content, author, image } = req.body;
 
     if (!req.user || !req.user.username) {
         return res.status(401).json({ message: "Unauthorized: Missing user information" });
@@ -43,6 +41,7 @@ export const createPost = async (req: any, res: any) => {
             content,
             tags: req.body.tags,
             comments: req.body.comments,
+            image,
         });
 
         const newPost = await post.save();
@@ -52,11 +51,7 @@ export const createPost = async (req: any, res: any) => {
     }
 };
 
-// Zaktualizuj post
 export const updatePost = async (req: Request, res: any) => {
-    if (req.body.author != null) {
-        res.post.author = req.body.author;
-    }
     if (req.body.title != null) {
         res.post.title = req.body.title;
     }
@@ -77,7 +72,6 @@ export const updatePost = async (req: Request, res: any) => {
     }
 };
 
-// Usuń post
 export const deletePost = async (req: Request, res: any) => {
     try {
         await res.post.deleteOne();
@@ -87,7 +81,6 @@ export const deletePost = async (req: Request, res: any) => {
     }
 };
 
-// Pobierz komentarze
 export const getComments = (req: Request, res: any) => {
     res.json({ id: res.post._id, author: res.post.author.username, comments: res.post.comments });
 };
