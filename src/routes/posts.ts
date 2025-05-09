@@ -1,25 +1,25 @@
 import express from "express";
 import { getAllPosts, getPostById, createPost, updatePost, deletePost, getComments } from "../controllers/postController";
 import getPost from "../middleware/getPostMiddleware";
+import { checkRole } from "../middleware/roleMiddleware";
 
-const router = express.Router();
+export const postRouter = express.Router();
 
-// Pobierz wszystkie posty
-router.get("/", getAllPosts);
+// get all psots
+postRouter.get("/", checkRole('admin'), getAllPosts);
 
-// Pobierz jeden post
-router.get("/:id", getPost, getPostById);
+// get one post
+postRouter.get("/:id", getPost, getPostById);
 
-// Utwórz nowy post
-router.post("/", createPost);
+// new post
+postRouter.post("/", createPost);
 
-// Zaktualizuj post
-router.patch("/:id", getPost, updatePost);
+// update post 
+postRouter.patch("/:id", getPost, updatePost);
 
-// Usuń post
-router.delete("/:id", getPost, deletePost);
+// delete post
+postRouter.delete("/:id", getPost, deletePost);
 
-// Pobierz komentarze
-router.get("/comments/:id", getPost, getComments);
+// get comments
+postRouter.get("/comments/:id", getPost, getComments);
 
-module.exports = router;
