@@ -1,6 +1,5 @@
 import Post from "../models/Post";
 
-
 export const likePost = async (req: any, res: any) => {
     try {
         const post = await Post.findById(req.params.id)
