@@ -19,6 +19,7 @@ const middleAuth = (req: any, res: Response, next: NextFunction) => {
         req.user = decodedData;
         next();
     } catch (err: any) {
+        console.error('JWT error:', err);
         res.status(500).json({ message: err.message })
     }
 }
