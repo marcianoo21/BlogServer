@@ -1,10 +1,64 @@
-import React from 'react';
+import { useEffect, useState } from 'react'
+
 function App() {
+  const [message, setMessage] = useState({});
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  async function login() {
+    try {
+      const response = await fetch('http://127.0.0.1:3000/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+      localStorage.setItem('token', data.token);
+      alert('Zalogowano!');
+    } catch (error) {
+      console.error('Error logging in:', error);
+    }
+  }
+
+  async function callMessage() {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://127.0.0.1:3000/posts', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setMessage(data);
+      console.log('Message:', data);
+    } catch (error) {
+      console.error('Error calling message:', error)
+    }
+  }
+
   return (
-    <div className="bg-blue-500 text-white p-4">
-      <h1 className="text-3xl font-bold">Hello, Tailwind CSS!</h1>
-    </div>
-  );
+    <>
+      <h2>Logowanie</h2>
+      <input
+        type="text"
+        placeholder="Login"
+        value={username}
+        onChange={e => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Hasło"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+      />
+      <button onClick={login}>Zaloguj</button>
+      <button onClick={callMessage}>Wywołaj /posts</button>
+      <pre>{JSON.stringify(message, null, 2)}</pre>
+    </>
+  )
 }
 
 export default App;
