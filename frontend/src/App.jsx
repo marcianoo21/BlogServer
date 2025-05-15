@@ -13,14 +13,22 @@ function App() {
         body: JSON.stringify({ username, password }),
       });
       const data = await response.json();
-      localStorage.setItem('token', data.token);
-      alert('Zalogowano!');
+      if (response.ok && data.token) {
+        localStorage.setItem('token', data.token);
+        alert('Zalogowano pomyślnie');
+      } else {
+        alert(data.message || 'Błąd logowania');
+      }
+     
+      // console.log('token', data.token)
+      // console.log(response.ok)
     } catch (error) {
+      alert('Błąd logowania');
       console.error('Error logging in:', error);
     }
   }
 
-  async function callMessage() {
+  async function showlMessages() {
     try {
       const token = localStorage.getItem('token');
       const response = await fetch('http://127.0.0.1:3000/posts', {
@@ -55,7 +63,7 @@ function App() {
         onChange={e => setPassword(e.target.value)}
       />
       <button onClick={login}>Zaloguj</button>
-      <button onClick={callMessage}>Wywołaj /posts</button>
+      <button onClick={showlMessages}>Wywołaj /posts</button>
       <pre>{JSON.stringify(message, null, 2)}</pre>
     </>
   )
