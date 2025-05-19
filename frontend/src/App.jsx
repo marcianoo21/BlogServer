@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Login } from './components/login.jsx'
 
 function App() {
   const [message, setMessage] = useState({});
@@ -49,8 +50,11 @@ function App() {
 
   return (
     <>
-      <h2>Logowanie</h2>
-      <input
+      <div className='flex justify-center items-center content-center border-8 h-[10%]'>
+        <h2 className='text-4xl font-bold mb-4'>Logowanie</h2>
+      </div>
+      <Login />
+      {/* <input
         type="text"
         placeholder="Login"
         value={username}
@@ -64,7 +68,7 @@ function App() {
       />
       <button onClick={login}>Zaloguj</button>
       <button onClick={showlMessages}>Wywołaj /posts</button>
-      <pre>{JSON.stringify(message, null, 2)}</pre>
+      <pre>{JSON.stringify(message, null, 2)}</pre> */}
     </>
   )
 }
