@@ -57,5 +57,20 @@ export const loginUser = async (req: any, res: any): Promise<void> => {
     
 }
 
+export const listUsers = async (req: any, res: any): Promise<void> => {
+    try {
+            const users = await User.find()
+            const usersList = users.map(user => ({
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role
+            }));
+            res.status(200).json(usersList);
+        } catch (err: any) {
+            res.status(400).json({ message: err.message });
+        }
+}
+
 
 export default router;
