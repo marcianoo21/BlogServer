@@ -8,12 +8,13 @@ const router = express.Router()
 export const registerUser = async (req: any, res: any): Promise<void> => {
     const { username, email, password, role } = req.body;
     try {
+        const trimmedUsername = username.trim();
         const existingUserEmail = await User.findOne({ email });
         if (existingUserEmail) {
             return res.status(400).json({ message: "User with provided email already exists"});
         }
 
-        const existingUserName = await User.findOne({ username });
+        const existingUserName = await User.findOne({ username: trimmedUsername });
         if (existingUserName) {
             return res.status(400).json({ message: "User with provided username already exists"});
         }
@@ -21,7 +22,7 @@ export const registerUser = async (req: any, res: any): Promise<void> => {
         const hashedPassword = await bcrypt.hash(password, 8);
 
         const newUser = new User({
-            username,
+            username: trimmedUsername,
             email,
             password: hashedPassword,
             role: role,
@@ -37,7 +38,8 @@ export const registerUser = async (req: any, res: any): Promise<void> => {
 export const loginUser = async (req: any, res: any): Promise<void> => {
     const { username, password } = req.body;
     try {
-        const user = await User.findOne({ username });
+        const trimmedUsername = username.trim();
+        const user = await User.findOne({ username: trimmedUsername });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }

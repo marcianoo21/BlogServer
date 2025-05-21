@@ -1,13 +1,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Login } from './components/login.jsx';
-import MainPage from './components/mainPage.jsx';
+import { Login, Main, Test } from '../src/pages';
+import { ProtectedRoute } from './components/ProtectedRoute.jsx';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/main" element={<MainPage />} />
+       <Route element={<ProtectedRoute />}>
+          <Route path="/main" element={<Main />} />
+          <Route path="/test" element={<Test />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

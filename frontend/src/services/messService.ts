@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 const [message, setMessage] = useState({})
 
-  async function showMessages() {
+  export async function showMessages() {
     try {
       const token = localStorage.getItem('token');
       const response = await fetch('http://127.0.0.1:3000/posts', {
