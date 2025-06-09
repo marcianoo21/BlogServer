@@ -13,6 +13,7 @@ services:
       context: ./frontend
     ports:
       - "5173:80"
+    restart: always
     depends_on:
       - backend
   backend:
@@ -22,10 +23,11 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
+    restart: always
     env_file:
       - ./backend/.env
     depends_on:
-     - mongo
+      - mongo
   mongo:
     image: mongo:6
     restart: always
@@ -36,7 +38,6 @@ services:
 
 volumes:
   mongo-data:
-
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the
