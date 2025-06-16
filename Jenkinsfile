@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        TARGET_HOST = credentials('app-server-host')      // np. ec2-user@1.2.3.4
+        TARGET_HOST = credentials('app-server-host') 
     }
 
     stages {
