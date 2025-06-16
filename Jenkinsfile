@@ -29,7 +29,7 @@ pipeline {
     stages {
         stage('Test SSH Agent') {
             steps {
-                sshagent(['ec2-ssh-key']) {
+                sshagent(['ssh-key-id']) {
                     sh 'ssh-add -l'  // lista załadowanych kluczy, powinieneś zobaczyć fingerprint
                 }
             }
