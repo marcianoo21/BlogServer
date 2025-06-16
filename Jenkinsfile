@@ -60,11 +60,21 @@
 pipeline {
     agent any
 
+    environment {Add commentMore actions
+            TARGET_HOST = credentials('app-server-host')
+        }
 
     stages {
         stage('Test SSH') {
             steps {            
-             sh '''  ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa ec2-user@3.71.114.206 "echo SSH connection successful" '''
+                sh '''
+                    ssh -i /var/lib/jenkins/.ssh/id_rsa $TARGET_HOST <<EOF
+                    cd ~/BlogServer
+                    git pull origin main
+                    docker-compose down
+                    docker-compose up -d --build
+                    EOF
+                    '''            
             }
         }
     }
