@@ -60,7 +60,7 @@
 pipeline {
     agent any
 
-    environment {Add commentMore actions
+    environment {
             TARGET_HOST = credentials('app-server-host')
         }
 
