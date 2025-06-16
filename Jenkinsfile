@@ -64,7 +64,7 @@ pipeline {
     stages {
         stage('Test SSH') {
             steps {            
-                sh "ssh -o StrictHostKeyChecking=n -i /home/ec2-user/.ssh/id_rsa ec2-user@3.71.114.206 'echo SSH connection successful'"
+                sh "ssh -o StrictHostKeyChecking=no -i /home/ec2-user/.ssh/id_rsa ec2-user@3.71.114.206 'echo SSH connection successful'"
             }
         }
     }
