@@ -63,7 +63,7 @@ pipeline {
     stages {
         stage('Test SSH') {
             steps {
-                sshagent(['ec2-private-key-text']) {
+                sshagent(['ssh-key-id']) {
                     sh "ssh -o StrictHostKeyChecking=no ec2-user@3.71.114.206 'echo SSH connection successful'"
                 }
             }
