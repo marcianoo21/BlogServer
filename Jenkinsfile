@@ -60,16 +60,11 @@
 pipeline {
     agent any
 
-    environment {
-        SSH_AUTH_SOCK = ''
-    }
 
     stages {
         stage('Test SSH') {
-            steps {
-                sshagent(['ssh-key-id']) {
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@3.71.114.206 'echo SSH connection successful'"
-                }
+            steps {            
+                sh "ssh -o StrictHostKeyChecking=n -i /home/ec2-user/.ssh/id_rsa ec2-user@3.71.114.206 'echo SSH connection successful'"
             }
         }
     }
