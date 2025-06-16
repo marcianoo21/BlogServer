@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sshagent (credentials: ['ssh-key-id']) {
                     sh '''
-                        ssh $TARGET_HOST <<EOF
+                        ssh -o StrictHostKeyChecking=no $TARGET_HOST <<EOF
                         cd ~/BlogServer
                         git pull origin main
                         docker-compose down
