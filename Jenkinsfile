@@ -42,7 +42,7 @@ pipeline {
                         echo "$SSH_KEY" > private_key.pem
                         chmod 600 private_key.pem
                         ssh -v -o StrictHostKeyChecking=no -i private_key.pem $TARGET_HOST "echo SSH connection successful"
-                        ssh -o StrictHostKeyChecking=no -i private_key.pem $TARGET_HOST <<EOF
+                        ssh -tt -o StrictHostKeyChecking=no -i private_key.pem $TARGET_HOST <<EOF
                         cd ~/BlogServer
                         git pull origin main
                         docker-compose down
