@@ -60,6 +60,10 @@
 pipeline {
     agent any
 
+    environment {
+        SSH_AUTH_SOCK = ''
+    }
+
     stages {
         stage('Test SSH') {
             steps {
