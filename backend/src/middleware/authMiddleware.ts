@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
-import  { Response, NextFunction } from 'express'
+// import  { Response, NextFunction } from 'express'
 import { Schema } from 'mongoose';
 
 
-const middleAuth = (req: any, res: Response, next: NextFunction) => {
+const middleAuth = (req: any, res: any, next: any) => {
     const authToken = req.headers.authorization;
 
     if (!authToken || !authToken.startsWith('Bearer ')) {

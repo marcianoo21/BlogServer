@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 export const checkRole = (requiredRole: string) => {
-    return (req: any, res: any, next: NextFunction) => {
+    return (req: any, res: any, next: any) => {
         if (!req.user || req.user.role !== requiredRole) {
             return res.status(403).json({ message: "Access denied: insufficient permissions" });
         }
