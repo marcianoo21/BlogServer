@@ -2,13 +2,11 @@ services:
   frontend:
     build:
       context: ./frontend
-    ports:
-      - "8080:80" 
     restart: always
+    expose:
+      - "80"
     depends_on:
       - backend
-    expose:
-      - "80"  
 
   backend:
     build:
