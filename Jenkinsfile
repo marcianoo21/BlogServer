@@ -9,7 +9,7 @@ pipeline {
         stage('Test SSH') {
             steps {            
                sh '''
-                ssh -i /var/lib/jenkins/.ssh/id_rsa $TARGET_HOST<<EOF
+                ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa $TARGET_HOST<<EOF
                 cd ~/BlogServer
                 git pull origin main
                 docker-compose down
