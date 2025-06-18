@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        TARGET_HOST = '3.66.230.238'
+        TARGET_HOST = credentials('app-server-host-2')
     }
 
     stages {
