@@ -15,6 +15,7 @@ app.use(cors());
 
 app.use('/posts', middleAuth, postRouter);
 app.use('/auth', userRouter);
+console.log(middleAuth)
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
