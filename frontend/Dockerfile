@@ -13,6 +13,9 @@ FROM nginx:1.25-alpine
 # Skopiuj zbudowane pliki do katalogu nginx
 COPY --from=build /app/dist /usr/share/nginx/html
 
+# Zmień właściciela na nginx
+RUN chown -R nginx:nginx /usr/share/nginx/html
+
 # Skopiuj własną konfigurację nginx (opcjonalnie, patrz poniżej)
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
