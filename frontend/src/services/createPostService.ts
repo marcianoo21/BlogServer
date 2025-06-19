@@ -1,7 +1,7 @@
 import { apiFetch } from './apiFetch';
 
 export function createPost(post: any) {
-  return apiFetch('http://127.0.0.1:3000/api/posts', {
+  return apiFetch('/api/posts', {
     method: 'POST',
     body: JSON.stringify(post),
   });

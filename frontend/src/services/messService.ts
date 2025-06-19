@@ -5,7 +5,7 @@ const [message, setMessage] = useState({})
   export async function showMessages() {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://127.0.0.1:3000/api/posts', {
+      const response = await fetch('/api/posts', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
