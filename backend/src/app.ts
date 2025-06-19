@@ -13,8 +13,8 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 
-app.use('/posts', middleAuth, postRouter);
-app.use('/auth', userRouter);
+app.use('/api/posts', middleAuth, postRouter);
+app.use('/api/auth', userRouter);
 console.log(middleAuth)
 
 app.listen(port, () => {
