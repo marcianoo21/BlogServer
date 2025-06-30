@@ -26,22 +26,16 @@ export const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 px-2">
-      <div className="
-        w-full max-w-md sm:max-w-lg md:max-w-xl
-        h-auto py-8 px-4 sm:px-8
-        flex flex-col items-center justify-center
-        bg-neutral-800 rounded-3xl
-        shadow-[0_10px_40px_rgba(128,0,255,0.35)]
-        ">
-        <h2 className='text-6xl font-semibold mb-25 '>Log<span className='bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent transition-all duration-800'>in</span></h2>
-    <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4 w-full">
+    <div className="login-bg">
+      <div className="login-box">
+        <h2 className='login-title '>Log<span className='bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent transition-all duration-800'>in</span></h2>
+    <form onSubmit={handleSubmit} className="login-form">
       <input
         type="text"
         placeholder="Username"
         value={username}
         onChange={e => setUsername(e.target.value)}
-        className="border rounded px-3 py-2 w-64 max-w-xs"
+        className="login-input"
         required
       />
       <input
@@ -49,7 +43,7 @@ export const Login = () => {
         placeholder="Password"
         value={password}
         onChange={e => setPassword(e.target.value)}
-        className="border rounded px-3 py-2 w-64 max-w-xs"
+        className="login-input"
         required
       />
       <a>
@@ -59,7 +53,7 @@ export const Login = () => {
       </a>
       <button
         type="submit"
-        className="bg-red-600 text-white w-3/7 px-6 py-2 rounded transition mt-10"
+        className="login-btn"
       >
         Login
       </button>
