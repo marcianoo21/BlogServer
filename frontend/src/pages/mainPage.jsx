@@ -67,12 +67,12 @@ export const Main = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 flex flex-col items-center py-8">
-      <header className="w-full max-w-2xl flex justify-between items-center mb-8">
+    <div className="main-page">
+      <header className="header">
         <h1 className="text-3xl font-bold text-purple-400">Blog dla znajomych</h1>
         <button
           onClick={handleLogout}
-          className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition"
+          className="logout-btn"
         >
           Wyloguj
         </button>
