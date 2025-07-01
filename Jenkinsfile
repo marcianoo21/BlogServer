@@ -6,6 +6,12 @@ pipeline {
     }
 
     stages {
+        stage('Clean') {
+    steps {
+        sh 'rm -rf node_modules/.vite'
+        sh 'npm ci'
+    }
+}
         stage('Deploy to EC2') {
             steps {
                 sh """
