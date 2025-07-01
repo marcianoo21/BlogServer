@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Login, Main, Test } from '../src/pages';
-import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 function App() {
   return (
