@@ -41,7 +41,7 @@ export const loginUser = async (req: any, res: any): Promise<void> => {
         const trimmedUsername = username.trim();
         const user = await User.findOne({ username: trimmedUsername });
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({ message: "Invalid credentials" });
         }
 
         const properPassword = await bcrypt.compare(password, user.password);

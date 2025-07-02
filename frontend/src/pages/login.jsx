@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/authService';
-
+import '../styles/login.css';
 
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,48 +18,53 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
+    // Walidacja pustych pól
+    if (!username.trim() || !password.trim()) {
+      setError('Wszystkie pola są wymagane.');
+      return;
+    }
+
     const result = await login(username, password);
     if (result.success) {
-       navigate('/main');
+      navigate('/main');
     } else {
-      alert(result.message);
+      setError(result.message || 'Nieprawidłowe dane logowania.');
     }
   };
 
   return (
     <div className="login-bg">
       <div className="login-box">
-        <h2 className='login-title '>Log<span className='bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent transition-all duration-800'>in</span></h2>
-    <form onSubmit={handleSubmit} className="login-form">
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-        className="login-input"
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        className="login-input"
-        required
-      />
-      <a>
-        <p className="text-sm text-blue-500 hover:underline cursor-pointer mt-[-10px]">
-          Forgot password?
-        </p>
-      </a>
-      <button
-        type="submit"
-        className="login-btn"
-      >
-        Login
-      </button>
-    </form>
+        <h2 className="login-title">Login</h2>
+        <form onSubmit={handleSubmit} className="login-form">
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            className="login-input"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            className="login-input"
+            required
+          />
+          {/* Komunikat o błędzie */}
+          {error && <div className="login-error">{error}</div>}
+          <a>
+            <p className='login-pass'>Forgot password?</p>
+          </a>
+          <button type="submit" className="login-btn">
+            Login
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
   );
 }
