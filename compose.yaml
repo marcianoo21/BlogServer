@@ -5,7 +5,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:80"
-    restart: always
     depends_on:
       - backend
 
@@ -16,7 +15,6 @@ services:
       - "3000"
     environment:
       NODE_ENV: production
-    restart: always
     env_file:
       - ./backend/.env
     depends_on:
@@ -24,7 +22,6 @@ services:
 
   mongo:
     image: mongo:6
-    restart: always
     ports:
       - "27017:27017"
     volumes:
